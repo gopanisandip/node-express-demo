@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Bootstrap Example</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+
+<body>
+
+  <div class="container">
+
+    <table class="table table-striped">
+      <hr>
+      <h1>USER LOGIN INFORMATION</h1>
+      <hr>
+      <form class="search" action="/user" method="GET">
+        <input class="bar" type="text" placeholder="Search..." name="search">
+        <button><i class="searchdata"></i>click</button>
+      </form>
+      <br>
+      <br>
+      <thead>
+        <tr>
+          <th>FIRST NAME</th>
+          <th>LAST NAME</th>
+          <th>EMAIL</th>
+          <th>HOBBIES</th>
+          <th>PASSWORD</th>
+          <th>C.PASSWORD</th>
+          <th>
+            <span class="glyphicon">&#xe065;</span>
+            <span class="glyphicon">&#xe235;</span>
+            <span class="glyphicon">&#xe020;</span>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each allDetails}}
+        <tr>
+          <td>{{this.firstName}}</td>
+          <td>{{this.lastName}}</td>
+          <td>{{this.email}}</td>
+          <td>{{this.hobbies}}</td>
+          <td>{{this.password}}</td>
+          <td>{{this.confirmPassword}}</td>
+          <td>
+            <a href="/update/{{this._id}}" id="btn1"> Edit </a>
+            <a href="/delete/{{this._id}}" id="btn2"> Delete </a>
+          </td>
+        </tr>
+        {{/each}}
+      </tbody>
+    </table>
+    <a href="/uploadimage"><button>Uploadimage</button></a>
+    <br>
+    <br>
+    {{#if pagination.prev}}
+    <a href="?page={{pagination.prev}}">previous</a>
+    {{/if}}
+
+    {{#if pagination.next}}
+    <a href="?page={{pagination.next}}">next</a>
+    {{/if}}
+
+    <br />
+    <br>
+    <form>
+      <input id="data" type="button" value="logout" href="/signin" />
+    </form>
+  </div>
+  <script>
+    $(document).ready(function () {
+      $("#data").click(function () {
+        alert("logout successful");
+        window.location.href = "signin"
+      })
+    })
+  </script>
+  <script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert-dev.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.css">
+  <script>
+    $(document).ready(function () {
+
+      $(document).on("click", "#btn2", function (e) {
+        e.preventDefault();
+        var urlToDelete = $(this).attr('href');
+        swal({
+          title: "Are you sure for delete this data ?",
+          text: "then click ok buttons",
+          type: "success",
+          confirmButtonText: "Ok"
+        }, function (result) {
+          window.location = urlToDelete;
+        });
+      });
+      return false;
+    })
+  </script>
+</body>
+
+</html>
